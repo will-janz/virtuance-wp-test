@@ -120,6 +120,10 @@ add_action( 'widgets_init', 'will_janz_widgets_init' );
  * Enqueue scripts and styles.
  */
 function will_janz_scripts() {
+	// Using Materialize as the base
+	wp_enqueue_style( 'materialize.min.css', get_template_directory_uri() . '/css/materialize.min.css' );
+	wp_enqueue_script( 'materialize.min.js', get_template_directory_uri() . '/js/materialize.min.js' );
+
 	wp_enqueue_style( 'will-janz-style', get_stylesheet_uri() );
 
 	wp_enqueue_script( 'will-janz-navigation', get_template_directory_uri() . '/js/navigation.js', array(), '20151215', true );
