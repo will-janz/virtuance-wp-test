@@ -14,26 +14,26 @@
 
 get_header();
 ?>
+	<!-- I put the main content as a card because I think it looks nice -->
+	<main>
+		<div class="card col s12">
+			<div class="card-content">
+				<?php
+				while ( have_posts() ) :
+					the_post();
 
-	<div id="primary" class="content-area">
-		<main id="main" class="site-main">
+					get_template_part( 'template-parts/content', 'page' );
 
-		<?php
-		while ( have_posts() ) :
-			the_post();
+					// If comments are open or we have at least one comment, load up the comment template.
+					if ( comments_open() || get_comments_number() ) :
+						comments_template();
+					endif;
 
-			get_template_part( 'template-parts/content', 'page' );
-
-			// If comments are open or we have at least one comment, load up the comment template.
-			if ( comments_open() || get_comments_number() ) :
-				comments_template();
-			endif;
-
-		endwhile; // End of the loop.
-		?>
-
-		</main><!-- #main -->
-	</div><!-- #primary -->
+				endwhile; // End of the loop.
+				?>
+			</div>
+		</div><!-- .card -->
+	</main>
 
 <?php
 get_sidebar();
