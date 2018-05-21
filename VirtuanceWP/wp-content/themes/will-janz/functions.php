@@ -124,6 +124,11 @@ function will_janz_scripts() {
 	wp_enqueue_style( 'materialize.min.css', get_template_directory_uri() . '/css/materialize.min.css' );
 	wp_enqueue_script( 'materialize.min.js', get_template_directory_uri() . '/js/materialize.min.js' );
 
+	// Fetch contacts script that should probably be a plugin
+	wp_enqueue_script( 'fetch-contacts', get_template_directory_uri() .'/js/fetch-contacts.js', array( 'jquery' ), null, true );
+	// Populate AJAX object; if only the docs told you to do this
+	wp_localize_script( 'fetch-contacts', 'my_ajax_obj', array( 'ajax_url' => admin_url( 'admin-ajax.php' ) ) );
+
 	wp_enqueue_style( 'will-janz-style', get_stylesheet_uri() );
 
 	wp_enqueue_script( 'will-janz-navigation', get_template_directory_uri() . '/js/navigation.js', array(), '20151215', true );
@@ -163,3 +168,48 @@ if ( defined( 'JETPACK__VERSION' ) ) {
 	require get_template_directory() . '/inc/jetpack.php';
 }
 
+
+/**
+ * Custom AJAX
+ */
+function fetch_contacts() {
+	// I've gone past my three hours around here
+	// I don't want to bring in another library for one API call,
+	// so the next TODO would be to cURL the endpoint and forward that over.
+	// I don't currently have a place to store my API key,
+	// probably make it a config option for a plugin or something.
+
+	// For now, dummy data
+	echo json_encode([
+		[
+			'first_name' => 'First1',
+			'last_name'  => 'Last1',
+			'email'      => 'first_last1@example.com',
+		],
+		[
+			'first_name' => 'First2',
+			'last_name'  => 'Last2',
+			'email'      => 'first_last2@example.com',
+		],
+		[
+			'first_name' => 'First3',
+			'last_name'  => 'Last3',
+			'email'      => 'first_last3@example.com',
+		],
+		[
+			'first_name' => 'First4',
+			'last_name'  => 'Last4',
+			'email'      => 'first_last4@example.com',
+		],
+		[
+			'first_name' => 'First5',
+			'last_name'  => 'Last5',
+			'email'      => 'first_last5@example.com',
+		],
+	]);
+
+	// Finish
+	wp_die();
+}
+add_action('wp_ajax_fetch_contacts', 'fetch_contacts');
+add_action('wp_ajax_nopriv_fetch_contacts', 'fetch_contacts');
